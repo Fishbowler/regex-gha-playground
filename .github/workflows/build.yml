@@ -1,0 +1,28 @@
+---
+name: Build
+
+on:
+  pull_request_target:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Find JIRA title
+        id: find_ticket_id
+        continue-on-error: true
+        uses: paulschuberth/regex-extract-action@1.0.10
+        with:
+          haystack: ${{ github.event.pull_request.title }}
+          needle: 'JIRA-\d+'
+          mode: first
+      
+      - name: Check output
+        run: |
+            echo ${{ steps.find_ticket_id.outputs.matches }}
+            echo The above should be the reference to a JIRA ticket that begins JIRA- and ends with a number
