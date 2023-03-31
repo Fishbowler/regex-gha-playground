@@ -16,7 +16,7 @@ jobs:
       - name: Find JIRA title
         id: find_ticket_id
         continue-on-error: true
-        uses: paulschuberth/regex-extract-action@1.0.10
+        uses: paulschuberth/regex-extract-action@v1.0.10
         with:
           haystack: ${{ github.event.pull_request.title }}
           needle: 'JIRA-\d+'
