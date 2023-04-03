@@ -16,13 +16,13 @@ jobs:
       - name: Find JIRA title
         id: find_ticket_id
         continue-on-error: true
-        uses: paulschuberth/regex-extract-action@v1.0.10
+        uses: MeilCli/regex-match@v1
         with:
-          haystack: ${{ github.event.pull_request.title }}
-          needle: 'JIRA-\d+'
-          mode: first
+          search_string: ${{ github.event.pull_request.title }}
+          regex_pattern: 'JIRA-\d+'
+          regex_option: 'i'
       
       - name: Check output
         run: |
-            echo ${{ steps.find_ticket_id.outputs.matches }}
+            echo ${{ steps.find_ticket_id.outputs.matched_first }}
             echo The above should be the reference to a JIRA ticket that begins JIRA- and ends with a number
